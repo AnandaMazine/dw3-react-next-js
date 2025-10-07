@@ -4,6 +4,11 @@ import Welcome from "@/components/Welcome";
 import User from "@/components/User";
 import Description from "@/components/Description";
 import Pet from "@/components/Pet";
+import Counter from "@/components/Counter";
+import UserForm from "@/components/UserForm";
+import ComponentePai from "@/components/ComponentePai";
+import Children from "@/components/Children";
+import TaskList from "@/components/TaskList";
 
 export default function Home() {
   return (
@@ -22,8 +27,42 @@ export default function Home() {
         {/* Passando props para os components */}
         <Description city="Miracatu" age={28} email="ananda@email.com" />
         {/* Componente com Desestruturação de props */}
-        <Pet name="Rex" breed="Pitbull" age={3}/>
-      </main>      
+        <Pet name="Rex" breed="Pitbull" age={3} />
+        <br />
+        <Counter />
+        <br />
+        <UserForm />
+        <br />
+        <br />
+        <ComponentePai />
+        <br />
+        <br />
+        <Children>
+          <div>
+            <p>Este é o conteúdo do Children</p>
+          </div>
+        </Children>
+        <br />
+        <br />
+        <TaskList
+        tasks={[          {
+            id: 1,
+            text:"Pagar contas",
+          },
+          {
+            id: 2,
+            text:"Fazer compras no mercado",
+          },
+          {
+            id: 3,
+            text:"Lavar o carro",
+          },
+          {
+            id: 4,
+            text:"Estudar React",
+          },]}
+        />
+      </main>
     </>
   );
 }
