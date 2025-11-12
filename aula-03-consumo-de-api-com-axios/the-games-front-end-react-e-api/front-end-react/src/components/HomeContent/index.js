@@ -5,10 +5,14 @@ import styles from "@/components/HomeContent/HomeContent.module.css";
 import Loading from "../Loading";
 // Importando o AXIOS (para enviar as requisições HTTP)
 import axios from "axios";
+import EditContent from "../EditContent/EditContent";
 
 const HomeContent = () => {
   // Criando um estado para a lista de jogos
   const [games, setGames] = useState([]);
+  // Criando o estado para controlar o carregamento da página
+  const [loading, setLoading] = useState(true);
+  const [selectedGame, setSelectedGame] = useState(null);
 
   // Criando o bloco do useEffect:
   useEffect(() => {
@@ -20,6 +24,8 @@ const HomeContent = () => {
         // console.log(response.data.games);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchGames();
@@ -41,6 +47,16 @@ const HomeContent = () => {
     }
   };
 
+  // FUNÇÃO PARA ABRIR O MODAL
+  const openEditModal = (game) => {
+    setSelectedGame(game);
+  };
+
+  // FUNÇÃO PARA FECHAR O MODAL
+  const closeEditModal = () => {
+    setSelectedGame(null);
+  };
+
   return (
     <>
       <div className={styles.homeContent}>
@@ -50,7 +66,8 @@ const HomeContent = () => {
           <div className={styles.title}>
             <h2>Lista de jogos</h2>
           </div>
-          {/* <Loading /> */}
+          <Loading />
+          <Loading loading={loading} />
           <div className={styles.games} id={styles.games}>
             {/* Lista de jogos irá aqui */}
             {games.map((game) => (
@@ -85,11 +102,17 @@ const HomeContent = () => {
                   >
                     Deletar
                   </button>
+                  {/* Botão para Editar */}
+                  <button className={styles.btnEdit} onClick={() => openEditModal(game)}>Editar</button>
                 </div>
               </ul>
             ))}
           </div>
         </div>
+        {/* Renderização condicional para fazer aparecer o modal */}
+        {selectedGame && (
+          <EditContent game={selectedGame} closeEditModal={closeEditModal}/>
+        )}
       </div>
     </>
   );
